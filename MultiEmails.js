@@ -3,7 +3,7 @@ class MultiEmailsInput {
 		this.data = JSON.parse(inputEl.getAttribute('data-value'));
 		this.__inputEl = inputEl;
 		// this.__isOneline = this.__inputEl.classList.contains('oneline');
-		this.__isOneline = this.__inputEl.getAttribute('data-role') === 'multiemailsinput--oneline' ? true : false;
+		this.__isOneline = this.__inputEl.getAttribute('data-role') === 'multiEmailsInput--oneline' ? true : false;
 		this.__init();
 	}
 
@@ -97,7 +97,7 @@ class MultiEmailsManager {
 	}
 
 	__init() {
-		const inputEls = document.querySelectorAll('input[data-role*="multiemailsinput"]');
+		const inputEls = document.querySelectorAll('input[data-role*="multiEmailsInput"]');
 
 		inputEls.forEach(inputEl => {
 			this.multiEmailsList.push(new MultiEmailsInput(inputEl));
