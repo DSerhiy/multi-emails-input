@@ -7,7 +7,7 @@ Add style file:
 ```
 <link rel="stylesheet" href="multi-email.css">
 ```
-Add script file 'MultiEmails.js' before closing body tag: 
+Add script file 'multi-emails.js' before closing body tag: 
 ```
 <script src="multi-emails.js"></script>
 ```
