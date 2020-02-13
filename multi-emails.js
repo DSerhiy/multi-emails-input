@@ -2,8 +2,7 @@ class MultiEmailsInput {
 	constructor(inputEl) {
 		this.data = JSON.parse(inputEl.getAttribute('data-value'));
 		this.__inputEl = inputEl;
-		// this.__isOneline = this.__inputEl.classList.contains('oneline');
-		this.__isOneline = this.__inputEl.getAttribute('data-role') === 'multiEmailsInput--oneline' ? true : false;
+		this.__isOneline = this.__inputEl.getAttribute('data-role') === 'multi-emails-input--oneline' ? true : false;
 		this.__init();
 	}
 
@@ -27,7 +26,6 @@ class MultiEmailsInput {
 		this.__inputEl.value = '';
 
 		this.__inputEl.addEventListener('keydown', (e) => {
-
 			if (this.__inputEl.classList.contains('sd_text--red'))
 				this.__inputEl.classList.remove('sd_text--red');
 
@@ -43,7 +41,6 @@ class MultiEmailsInput {
 			} else {
 				this.__inputEl.classList.add('sd_text--red');
 			}
-
 		});
 
 		this.__inputEl.parentElement.addEventListener('click', () => this.__inputEl.focus());
@@ -71,7 +68,7 @@ class MultiEmailsInput {
 		// Register deleteEmail handler for delete btn;
 		newEmailEl.querySelector('.sd_email-box_btn').addEventListener('click', () => {
 			const emailIndex = this.data.indexOf(email);
-			this.data = this.data.slice(0, emailIndex).concat(this.data.slice(emailIndex + 1));
+			this.data.splice(emailIndex, 1);
 			this.__inputEl.setAttribute('value', JSON.stringify(this.data));
 			newEmailEl.remove();
 		});
@@ -97,7 +94,7 @@ class MultiEmailsManager {
 	}
 
 	__init() {
-		const inputEls = document.querySelectorAll('input[data-role*="multiEmailsInput"]');
+		const inputEls = document.querySelectorAll('input[data-role*="multi-emails-input"]');
 
 		inputEls.forEach(inputEl => {
 			this.multiEmailsList.push(new MultiEmailsInput(inputEl));
