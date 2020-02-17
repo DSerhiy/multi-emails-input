@@ -22,6 +22,6 @@ Attribute 'value' takes the initial list of emails separated by coma to display 
 ```
 <input type="text" 
        data-role="multi-emails-input"
-       value='test0@gmail.com,test1@gmail.com,test2@gmail.com'>
+       value="test0@gmail.com,test1@gmail.com,test2@gmail.com">
 ```
 
