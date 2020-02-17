@@ -1,6 +1,6 @@
 class MultiEmailsInput {
 	constructor(inputEl) {
-		this.data = JSON.parse(inputEl.getAttribute('data-value'));
+		this.data = inputEl.getAttribute('data-value').split(',');
 		this.__inputEl = inputEl;
 		this.__isOneline = this.__inputEl.getAttribute('data-role') === 'multi-emails-input--oneline' ? true : false;
 		this.__init();
@@ -36,7 +36,7 @@ class MultiEmailsInput {
 			if (this.__validateEmail(emailValue)) {
 				e.currentTarget.value = '';
 				this.data.push(emailValue);
-				this.__inputEl.setAttribute('value', JSON.stringify(this.data));
+				this.__inputEl.setAttribute('value', this.data.join(','));
 				this.__createNewEmail(emailValue);
 			} else {
 				this.__inputEl.classList.add('sd_text--red');
@@ -69,7 +69,7 @@ class MultiEmailsInput {
 		newEmailEl.querySelector('.sd_email-box_btn').addEventListener('click', () => {
 			const emailIndex = this.data.indexOf(email);
 			this.data.splice(emailIndex, 1);
-			this.__inputEl.setAttribute('value', JSON.stringify(this.data));
+			this.__inputEl.setAttribute('value', this.data.join(','));
 			newEmailEl.remove();
 		});
 

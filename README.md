@@ -15,13 +15,13 @@ Add script file 'multi-emails.js' before closing body tag:
 Add attribute 'data-role' with value 'multi-emails-input' or 
 'multi-emails-input--oneline' (for one email in line) in HTML input element, that you intend to use as multi emails input.
 
-Attribute 'data-value' takes the initial array of emails to display on a page. 
+Attribute 'data-value' takes the initial list of emails separated by coma to display on a page. 
 
 ## Example as following: 
 
 ```
 <input type="text" 
        data-role="multi-emails-input"
-       data-value='["test0@gmail.com", "test1@gmail.com", "test2@gmail.com"]'>
+       data-value='test0@gmail.com,test1@gmail.com,test2@gmail.com'>
 ```
 
