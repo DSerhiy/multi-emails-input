@@ -1,6 +1,6 @@
 class MultiEmailsInput {
 	constructor(inputEl) {
-		this.data = inputEl.getAttribute('data-value').split(',');
+		this.data = inputEl.getAttribute('value').split(',');
 		this.__inputEl = inputEl;
 		this.__isOneline = this.__inputEl.getAttribute('data-role') === 'multi-emails-input--oneline' ? true : false;
 		this.__init();
