@@ -1,12 +1,20 @@
 class MultiEmailsInput {
 	constructor(inputEl) {
-		this.data = inputEl.getAttribute('value').split(',');
+		this.data = inputEl.value.split(',');
 		this.__inputEl = inputEl;
+		this.__dataInputEl = document.createElement('input');
 		this.__isOneline = this.__inputEl.getAttribute('data-role') === 'multi-emails-input--oneline' ? true : false;
 		this.__init();
 	}
 
 	__init() {
+
+		this.__dataInputEl.style.display = 'none';
+		this.__dataInputEl.setAttribute('type', 'text');
+		this.__dataInputEl.value = this.data.join(',');
+		this.__dataInputEl.name = this.__inputEl.name;
+		this.__dataInputEl.id = this.__inputEl.id;
+
 		// wrap input in multi-email-container
 		const wrapperEl = document.createElement('div');
 		wrapperEl.classList.add('sd_multi-emails_container', 'form-control');
@@ -16,13 +24,18 @@ class MultiEmailsInput {
 
 		this.__inputEl.removeAttribute('class');
 		this.__inputEl.parentElement.insertBefore(wrapperEl, this.__inputEl);
-		wrapperEl.appendChild(this.__inputEl);
+		wrapperEl.appendChild(this.__inputEl);		
 
+		this.__inputEl.removeAttribute('name');
+		this.__inputEl.removeAttribute('id');
+
+		this.__inputEl.parentElement.insertBefore(this.__dataInputEl, this.__inputEl);
+		
 		this.data.forEach((email) => {
 			this.__createNewEmail(email);
 		});
 
-		//reset input value for correct display
+		//reset input value for correct display		 
 		this.__inputEl.value = '';
 
 		this.__inputEl.addEventListener('keydown', (e) => {
@@ -36,7 +49,7 @@ class MultiEmailsInput {
 			if (this.__validateEmail(emailValue)) {
 				e.currentTarget.value = '';
 				this.data.push(emailValue);
-				this.__inputEl.setAttribute('value', this.data.join(','));
+				this.__dataInputEl.value = this.data.join(',');
 				this.__createNewEmail(emailValue);
 			} else {
 				this.__inputEl.classList.add('sd_text--red');
@@ -69,7 +82,7 @@ class MultiEmailsInput {
 		newEmailEl.querySelector('.sd_email-box_btn').addEventListener('click', () => {
 			const emailIndex = this.data.indexOf(email);
 			this.data.splice(emailIndex, 1);
-			this.__inputEl.setAttribute('value', this.data.join(','));
+			this.__dataInputEl.value = this.data.join(',');
 			newEmailEl.remove();
 		});
 
