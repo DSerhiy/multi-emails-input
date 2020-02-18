@@ -9,8 +9,7 @@ class MultiEmailsInput {
 
 	__init() {
 
-		this.__dataInputEl.style.display = 'none';
-		this.__dataInputEl.setAttribute('type', 'text');
+		this.__dataInputEl.setAttribute('type', 'hidden');
 		this.__dataInputEl.value = this.data.join(',');
 		this.__dataInputEl.name = this.__inputEl.name;
 		this.__dataInputEl.id = this.__inputEl.id;
@@ -23,6 +22,7 @@ class MultiEmailsInput {
 			wrapperEl.classList.add('sd_multi-emails_container--oneline');
 
 		this.__inputEl.removeAttribute('class');
+		this.__inputEl.removeAttribute('value');
 		this.__inputEl.parentElement.insertBefore(wrapperEl, this.__inputEl);
 		wrapperEl.appendChild(this.__inputEl);		
 
@@ -64,6 +64,20 @@ class MultiEmailsInput {
 
 		this.__inputEl.addEventListener('focusout', (e) => {
 			e.target.parentElement.classList.toggle('sd_multi-emails_container--onfocus');
+
+			if (this.__inputEl.classList.contains('sd_text--red'))
+				this.__inputEl.classList.remove('sd_text--red');
+
+			const emailValue = this.__inputEl.value;
+
+			if (this.__validateEmail(emailValue)) {
+				this.__inputEl.value = '';
+				this.data.push(emailValue);
+				this.__dataInputEl.value = this.data.join(',');
+				this.__createNewEmail(emailValue);
+			} else {
+				this.__inputEl.value = '';
+			}
 		});
 	}
 
