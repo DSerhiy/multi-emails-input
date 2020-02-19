@@ -89,7 +89,7 @@ class MultiEmailsInput {
 			newEmailEl.classList.add('sd_email-box--oneline');
 
 		newEmailEl.innerHTML = `
-			<div class="sd_email-box_btn">✕</div>
+			<i class="sd_email-box_btn fa fa-close"></i>
 			<div>${email}</div>`;
 
 		// Register deleteEmail handler for delete btn;

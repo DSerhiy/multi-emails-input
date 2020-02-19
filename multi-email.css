@@ -16,11 +16,10 @@
 }
 
 .sd_email-box {
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.9rem;
   margin-right: 5px;
   color: rgb(247, 245, 245);
-  padding: 2px 10px;
+  padding: 2px 8px;
   border: 1px solid rgb(150, 150, 150);
   border-radius: 5px;
   margin-top: 6px;
@@ -31,15 +30,11 @@
 }
 
 .sd_email-box div {
-  display: inline-block;
-  /* margin: 0px; */
+  display: inline-block; 
 }
 
 .sd_email-box_btn {
-  margin-right: 4px;
-  font-size: 10px;
-  border: 1px solid gray;
-  border-radius: 50%;
+  font-size: 14px;
   padding: 0px 3px;
   cursor: pointer;
 }
