@@ -15,14 +15,15 @@ class MultiEmailsInput {
 		this.__setUpWrapperEl();
 		
 		this.data.forEach((email) => {
-			this.__createEmailTag(email);
+			this.__inputEl.before(this.__createEmailTag(email));
 		});			
 	}
 
 	__setUpDataInputEl() {
 		this.__dataInputEl.setAttribute('type', 'text');
 		this.__dataInputEl.setAttribute('required', this.__inputEl.required);
-		this.__dataInputEl.style.display = 'none';		
+		this.__dataInputEl.style.display = 'none';
+		// console.log(this.data.join(','));	
 		this.__dataInputEl.value = this.data.join(',');
 		this.__dataInputEl.name = this.__inputEl.name;
 		this.__dataInputEl.id = this.__inputEl.id;	
@@ -32,6 +33,7 @@ class MultiEmailsInput {
 		if(this.__errorLable) {
 			this.__errorLable.style.display = 'none';
 			this.__dataInputEl.addEventListener('invalid', (e)=>{
+				console.log('test')
 				e.preventDefault();
 				this.__errorLable.style.display = 'block';			
 			});
@@ -53,7 +55,7 @@ class MultiEmailsInput {
 
 			if (e.key !== 'Enter') return;
 
-			const emailValue = e.currentTarget.value;
+			const emailValue = this.__inputEl.value;
 
 			if (this.__validateEmail(emailValue)) {
 				this.__addEmail(emailValue);				
