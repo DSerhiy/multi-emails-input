@@ -14,15 +14,16 @@
 
 <body class="bg-theme bg-theme9">
 	<div class="card">
-		<div class="card-body">
+		<la class="card-body">
 			<h1>Multiple Email Input1</h1>
 			<form action="post">
 				<input 
-				type="text"
+				type="text" required
 				id="1" name="emails"
-				data-role="multi-emails-input"
-				value="test0@gmail.com,test1@gmail.com,test2@gmail.com">
+				data-role="multi-emails-input">
+				<label class="error">This field is required.</label>
 				<button type="submit">send form</button>
+				
 			</form>			
 			
 		</div>
