@@ -1,6 +1,7 @@
 class MultiEmailsInput {
 	constructor(inputEl) {
 		this.data = inputEl.value === '' ? []: inputEl.value.split(',');
+		this.required = inputEl.required;
 		this.__inputEl = inputEl;
 		this.__dataInputEl = document.createElement('input');
 		this.__errorLabelEl = document.createElement('label');
@@ -13,7 +14,7 @@ class MultiEmailsInput {
 		this.__setUpWrapperEl();
 		this.__setUpDataInputEl();
 		this.__setUpInputEl();
-		this.__setUpErrorLabelEl();			
+		if(this.required) this.__setUpErrorLabelEl();			
 		this.data.forEach((email) => {
 			this.__inputEl.before(this.__createEmailTag(email));
 		});			
@@ -21,23 +22,21 @@ class MultiEmailsInput {
 
 	__setUpWrapperEl() {
 		// wrap input in multi-email-container
+		this.__inputEl.before(this.__wrapperEl);
 		this.__wrapperEl.classList.add('sd_multi-emails_container', 'form-control');
-
 		if (this.__isOneline) 
 			this.__wrapperEl.classList.add('sd_multi-emails_container--oneline');
-
-		this.__inputEl.before(this.__wrapperEl);
+		
 		this.__wrapperEl.addEventListener('click', () => this.__inputEl.focus());
 	}
 
 	__setUpDataInputEl() {
 		this.__dataInputEl.setAttribute('type', 'text');
-		this.__dataInputEl.required = this.__inputEl.required;
 		this.__dataInputEl.style.display = 'none';
 		this.__dataInputEl.value = this.data.join(',');
 		this.__dataInputEl.name = this.__inputEl.name;
 		this.__dataInputEl.id = this.__inputEl.id;
-		this.__wrapperEl.append(this.__dataInputEl);	
+		this.__wrapperEl.append(this.__dataInputEl);			
 	}
 
 	__setUpErrorLabelEl() {		
@@ -46,7 +45,7 @@ class MultiEmailsInput {
 			this.__errorLabelEl.innerText = 'This field is required.'
 		  this.__wrapperEl.after(this.__errorLabelEl);
 					
-			document.querySelector('form').addEventListener('submit', (e)=>{
+			this.__errorLabelEl.closest('form').addEventListener('submit', (e)=>{
 				if((!this.data.length)) {
 					e.preventDefault();					
 					this.__errorLabelEl.style.display = 'block';	
