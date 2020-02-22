@@ -2,52 +2,67 @@ class MultiEmailsInput {
 	constructor(inputEl) {
 		this.data = inputEl.value === '' ? []: inputEl.value.split(',');
 		this.__inputEl = inputEl;
-		this.__dataInputEl = document.createElement('input');	
-		this.__errorLable = inputEl.nextElementSibling.classList.contains('error') ? inputEl.nextElementSibling : null;
+		this.__dataInputEl = document.createElement('input');
+		this.__errorLabelEl = document.createElement('label');
+		this.__wrapperEl = document.createElement('div');	
 		this.__isOneline = this.__inputEl.getAttribute('data-role') === 'multi-emails-input--oneline' ? true : false;
 		this.__init();		
 	}
 
 	__init() {	
+		this.__setUpWrapperEl();
 		this.__setUpDataInputEl();
 		this.__setUpInputEl();
-		this.__setUpErrorLableEl();	
-		this.__setUpWrapperEl();
-		
+		this.__setUpErrorLabelEl();			
 		this.data.forEach((email) => {
 			this.__inputEl.before(this.__createEmailTag(email));
 		});			
 	}
 
-	__setUpDataInputEl() {
-		this.__dataInputEl.setAttribute('type', 'text');
-		this.__dataInputEl.setAttribute('required', this.__inputEl.required);
-		this.__dataInputEl.style.display = 'none';
-		// console.log(this.data.join(','));	
-		this.__dataInputEl.value = this.data.join(',');
-		this.__dataInputEl.name = this.__inputEl.name;
-		this.__dataInputEl.id = this.__inputEl.id;	
+	__setUpWrapperEl() {
+		// wrap input in multi-email-container
+		this.__wrapperEl.classList.add('sd_multi-emails_container', 'form-control');
+
+		if (this.__isOneline) 
+			this.__wrapperEl.classList.add('sd_multi-emails_container--oneline');
+
+		this.__inputEl.before(this.__wrapperEl);
+		this.__wrapperEl.addEventListener('click', () => this.__inputEl.focus());
 	}
 
-	__setUpErrorLableEl() {		
-		if(this.__errorLable) {
-			this.__errorLable.style.display = 'none';
-			this.__dataInputEl.addEventListener('invalid', (e)=>{
-				console.log('test')
-				e.preventDefault();
-				this.__errorLable.style.display = 'block';			
-			});
-		}		
+	__setUpDataInputEl() {
+		this.__dataInputEl.setAttribute('type', 'text');
+		this.__dataInputEl.required = this.__inputEl.required;
+		this.__dataInputEl.style.display = 'none';
+		this.__dataInputEl.value = this.data.join(',');
+		this.__dataInputEl.name = this.__inputEl.name;
+		this.__dataInputEl.id = this.__inputEl.id;
+		this.__wrapperEl.append(this.__dataInputEl);	
+	}
+
+	__setUpErrorLabelEl() {		
+			this.__errorLabelEl.classList.add('error');
+			this.__errorLabelEl.style.display = 'none';
+			this.__errorLabelEl.innerText = 'This field is required.'
+		  this.__wrapperEl.after(this.__errorLabelEl);
+					
+			document.querySelector('form').addEventListener('submit', (e)=>{
+				if((!this.data.length)) {
+					e.preventDefault();					
+					this.__errorLabelEl.style.display = 'block';	
+				} 						
+			});			
 	}
 
 	__setUpInputEl() {
-		//reset input value for correct display		 
+		//reset input value for correct display
 		this.__inputEl.value = '';
 		this.__inputEl.removeAttribute('required');
 		this.__inputEl.removeAttribute('class');
 		this.__inputEl.removeAttribute('value');
 		this.__inputEl.removeAttribute('name');
 		this.__inputEl.removeAttribute('id');	
+		this.__wrapperEl.append(this.__inputEl);
 
 		this.__inputEl.addEventListener('keydown', (e) => {
 			if (this.__inputEl.classList.contains('sd_text--red'))
@@ -79,21 +94,7 @@ class MultiEmailsInput {
 		this.__inputEl.addEventListener('focus', (e) => {
 			e.target.parentElement.classList.toggle('sd_multi-emails_container--onfocus');
 		});
-	}
-
-	__setUpWrapperEl() {
-		// wrap input in multi-email-container
-		const wrapperEl = document.createElement('div');
-		wrapperEl.classList.add('sd_multi-emails_container', 'form-control');
-
-		if (this.__isOneline) wrapperEl.classList.add('sd_multi-emails_container--oneline');
-		
-		this.__inputEl.parentElement.insertBefore(wrapperEl, this.__inputEl);
-		wrapperEl.appendChild(this.__inputEl);		
-		this.__inputEl.parentElement.insertBefore(this.__dataInputEl, this.__inputEl);		
-
-		wrapperEl.parentElement.addEventListener('click', () => this.__inputEl.focus());
-	}
+	}	
 
 	__createEmailTag(email) {
 		const newEmailEl = document.createElement('div');
@@ -123,7 +124,7 @@ class MultiEmailsInput {
 		this.__dataInputEl.value = this.data.join(',');
 		// Mount newEmailEl into DOM
 		this.__inputEl.before(this.__createEmailTag(email));
-		this.data.length === 1? this.__errorLable.style = 'display:none': true;
+		this.data.length === 1? this.__errorLabelEl.style = 'display:none': true;
 	}
 
 	__validateEmail(email) {
