@@ -40,17 +40,17 @@ class MultiEmailsInput {
 	}
 
 	__setUpErrorLabelEl() {		
-			this.__errorLabelEl.classList.add('error');
-			this.__errorLabelEl.style.display = 'none';
-			this.__errorLabelEl.innerText = 'This field is required.'
-		  this.__wrapperEl.after(this.__errorLabelEl);
-					
-			this.__errorLabelEl.closest('form').addEventListener('submit', (e)=>{
-				if((!this.data.length)) {
-					e.preventDefault();					
-					this.__errorLabelEl.style.display = 'block';	
-				} 						
-			});			
+		this.__errorLabelEl.classList.add('error');
+		this.__errorLabelEl.style.display = 'none';
+		this.__errorLabelEl.innerText = 'This field is required.';
+		this.__wrapperEl.after(this.__errorLabelEl);
+
+		this.__errorLabelEl.closest('form').addEventListener('submit', (e)=>{
+			if((!this.data.length)) {
+				e.preventDefault();					
+				this.__errorLabelEl.style.display = 'block';	
+			} 						
+		});			
 	}
 
 	__setUpInputEl() {
