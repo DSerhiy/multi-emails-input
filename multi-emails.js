@@ -44,9 +44,9 @@ class MultiEmailsInput {
 		this.__wrapperEl.after(this.__errorLabelEl);
 
 		this.__errorLabelEl.closest('form').addEventListener('submit', (e)=>{
-			if((!this.data.length)) {
+			if(!this.data.length) {
 				e.preventDefault();					
-				this.__errorLabelEl.classList.toggle('sd_milti-email_error--show');	
+				this.__checkValidation();	
 			} 						
 		});			
 	}
@@ -110,6 +110,7 @@ class MultiEmailsInput {
 			this.data.splice(emailIndex, 1);
 			this.__dataInputEl.value = this.data.join(',');
 			newEmailEl.remove();
+			this.__checkValidation();
 		});
 
 		return newEmailEl;		
@@ -120,9 +121,14 @@ class MultiEmailsInput {
 		this.data.push(email);
 		this.__dataInputEl.value = this.data.join(',');
 		this.__inputEl.before(this.__createEmailTag(email));
-		
+		this.__checkValidation();		
+	}
+
+	__checkValidation() {
 		if(this.required)
-			this.data.length === 1? this.__errorLabelEl.classList.toggle('sd_milti-email_error--show'): true;
+			this.data.length > 0 ? 
+				this.__errorLabelEl.classList.remove('sd_milti-email_error--show') : 
+				this.__errorLabelEl.classList.add('sd_milti-email_error--show');
 	}
 
 	__validateEmail(email) {
