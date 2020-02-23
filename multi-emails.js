@@ -14,7 +14,7 @@ class MultiEmailsInput {
 		this.__setUpWrapperEl();
 		this.__setUpDataInputEl();
 		this.__setUpInputEl();
-		if(this.required) this.__setUpErrorLabelEl();			
+		if(this.required) this.__setUpValidation();			
 		this.data.forEach((email) => {
 			this.__inputEl.before(this.__createEmailTag(email));
 		});			
@@ -39,16 +39,14 @@ class MultiEmailsInput {
 		this.__wrapperEl.append(this.__dataInputEl);			
 	}
 
-	__setUpErrorLabelEl() {		
-		this.__errorLabelEl.classList.add('error');
-		this.__errorLabelEl.style.display = 'none';
-		this.__errorLabelEl.innerText = 'This field is required.';
+	__setUpValidation() {		
+		this.__errorLabelEl.classList.add('sd_milti-email_error');
 		this.__wrapperEl.after(this.__errorLabelEl);
 
 		this.__errorLabelEl.closest('form').addEventListener('submit', (e)=>{
 			if((!this.data.length)) {
 				e.preventDefault();					
-				this.__errorLabelEl.style.display = 'block';	
+				this.__errorLabelEl.classList.toggle('sd_milti-email_error--show');	
 			} 						
 		});			
 	}
@@ -121,9 +119,10 @@ class MultiEmailsInput {
 		this.__inputEl.value = '';
 		this.data.push(email);
 		this.__dataInputEl.value = this.data.join(',');
-		// Mount newEmailEl into DOM
 		this.__inputEl.before(this.__createEmailTag(email));
-		this.data.length === 1? this.__errorLabelEl.style = 'display:none': true;
+		
+		if(this.required)
+			this.data.length === 1? this.__errorLabelEl.classList.toggle('sd_milti-email_error--show'): true;
 	}
 
 	__validateEmail(email) {

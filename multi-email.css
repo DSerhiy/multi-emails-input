@@ -3,6 +3,8 @@
   flex-wrap: wrap;
   height: auto;
   padding-top: 0px;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 .sd_multi-emails_container--oneline {
@@ -54,5 +56,19 @@
 }
 
 .sd_text--red {
-  color: red !important;
+  color: rgb(255, 86, 86) !important;
+}
+
+.sd_milti-email_error {
+  display: none;
+  color: rgb(255, 86, 86);
+  margin-top: 2px;
+}
+
+.sd_milti-email_error::after{
+  content: 'THIS FIELD IS REQUIRED.';
+}
+
+.sd_milti-email_error--show{
+  display: block;
 }
